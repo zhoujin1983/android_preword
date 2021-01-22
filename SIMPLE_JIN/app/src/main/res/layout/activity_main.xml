@@ -23,22 +23,22 @@
 
     <EditText
         android:id="@+id/edtx"
-        android:layout_width="321dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="0dp"
-        android:layout_toStartOf="@+id/button"
-        android:autofillHints=""
+        android:layout_toStartOf="@+id/btn"
         android:ems="10"
-        android:hint="Add a item here!" />
+        android:hint="add item here" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvlist"
         android:layout_width="match_parent"
-        android:layout_height="683dp"
-        android:layout_above="@+id/editTextTextPersonName3"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/edtx"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="0dp"

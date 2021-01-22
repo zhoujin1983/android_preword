@@ -1,9 +1,11 @@
 package com.example.simple_jin;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import org.apache.commons.io.FileUtils;
 import android.util.Log;
@@ -19,6 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String KEY_ITEM_TEXT = "item_text";
+    public static final String KEY_ITEM_POSITION = "item_position";
+    public static final int EDIT_TEXT_CODE = 20;
     List<String> items;
 
     Button btn;
@@ -35,10 +40,6 @@ public class MainActivity extends AppCompatActivity {
         edtx = findViewById(R.id.edtx);
         rvlist = findViewById(R.id.rvlist);
 
-//        items = new ArrayList<>();
-//        items.add("play soccer");
-//        items.add("eat lunch");
-//        items.add("Go shopping");
         loadItems();
 
         itemadapter.OnLongClickListener onLongClickListener = new itemadapter.OnLongClickListener(){
@@ -52,8 +53,18 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        itemadapter.OnClickListener onClickListener = new itemadapter.OnClickListener() {
+            @Override
+            public void onItemClicked(int position) {
+//                Log.d("MainActivity", "single click at position " + position);
+                Intent i = new Intent(MainActivity.this, EditActivity.class);
+                i.putExtra(KEY_ITEM_TEXT, items.get(position));
+                i.putExtra(KEY_ITEM_POSITION, position);
+                startActivityForResult(i, EDIT_TEXT_CODE);
+            }
+        };
 
-        itemsadapter = new itemadapter(items, onLongClickListener);
+        itemsadapter = new itemadapter(items, onLongClickListener, onClickListener);
         rvlist.setAdapter(itemsadapter);
         rvlist.setLayoutManager(new LinearLayoutManager(this));
 
@@ -70,6 +81,20 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode == RESULT_OK && requestCode == EDIT_TEXT_CODE){
+            String itemText = data.getStringExtra(KEY_ITEM_TEXT);
+            int position = data.getExtras().getInt(KEY_ITEM_POSITION);
+            items.set(position, itemText);
+            itemsadapter.notifyItemChanged(position);
+            saveItems();
+            Toast.makeText(getApplicationContext(), "Item updated successfully", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Log.w("MainActivity", "unknown call to onActivityResult");
+        }
+    }
 
     private File getDataFile(){
         return new File(getFilesDir(), "data.txt");
