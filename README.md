@@ -36,6 +36,10 @@ GIF created with [Recordit](https://recordit.co/).
 
 Describe any challenges encountered while building the app.
 
+The most difficult challenge I face is watch the video coding and add the necessary things to my app.
+I need to pause his code and type in my own place. Also my Android studio version is different from the
+video, so I have to do some search and figure out the correct button. Also some code even if I learned from video has some minor issue, I have to use stackoverflow to fix these issues. Finally I was able to get the app for what I want. 
+
 ## License
 
     Copyright [2021] [Jin Zhou]
